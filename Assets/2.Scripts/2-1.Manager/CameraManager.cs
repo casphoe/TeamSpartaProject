@@ -12,7 +12,7 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        followTarget = GameManager.instance.towerObject.transform;
+        followTarget = GameManager.instance.truckObject.transform;
     }
 
     // Update is called once per frame

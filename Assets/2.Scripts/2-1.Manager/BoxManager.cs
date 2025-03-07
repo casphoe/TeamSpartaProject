@@ -8,7 +8,7 @@ public class BoxManager : MonoBehaviour
 {
     GameObject boxPrefab;
 
-    Transform truck;
+    Transform Player;
 
     //박스 높이
     float boxHeight = 1.5f;
@@ -29,11 +29,11 @@ public class BoxManager : MonoBehaviour
         {
             instance = this;
         }
+        Player = GameObject.Find("Hero").transform;
     }
 
     private void Start()
     {
-        truck = GameManager.instance.towerObject.transform;
         for (int i = 0; i < 5; i++)
         {
             AddBox(50, 1);
@@ -43,11 +43,20 @@ public class BoxManager : MonoBehaviour
     //박스 추가 (기존 박스 위에 추가 되는 형식)
     public void AddBox(float hp,int level)
     {
-        Vector3 newBoxPoistion = truck.position + Vector3.up * (boxDataList.Count * boxHeight);
-        Debug.Log(newBoxPoistion);
-        GameObject newBox = Instantiate(boxPrefab, newBoxPoistion, Quaternion.identity, truck.transform.GetChild(0).transform);
+        Vector3 newBoxPoistion = new Vector3(Player.position.x, GameManager.instance.truckObject.transform.position.y) + Vector3.up * (boxDataList.Count * boxHeight);
+        GameObject newBox = Instantiate(boxPrefab, newBoxPoistion, Quaternion.identity, GameManager.instance.truckObject.transform.GetChild(0).transform);
+        newBox.GetComponent<BoxCollider2D>().isTrigger = true;
+        newBox.AddComponent<Rigidbody2D>();
+        newBox.GetComponent<Rigidbody2D>().isKinematic = true;
         Slider boxHpSlider = newBox.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>();
         boxDataList.Add(new BoxData(newBox, hp, level, boxHpSlider)); //새로운 박스를 리스트 끝에 추가
+        Player.position = newBoxPoistion + Vector3.up * boxHeight;
+    }
+
+    //박스 레벨업
+    public void BoxLevelUp(float hp, int level, Sprite spr, int wasteCoin)
+    {
+
     }
     
     //Hp가 0인 박스를 제거하는 함수 (Hp 0인 박스 제거)
@@ -84,9 +93,9 @@ public class BoxManager : MonoBehaviour
             moving = false;
             for(int i = 0; i < boxDataList.Count; i++)
             {
-                Vector3 targetPosition = truck.position + Vector3.up * (i * boxHeight);
+                Vector3 targetPosition = GameManager.instance.truckObject.transform.position + Vector3.up * (i * boxHeight);
                 boxes[i].transform.position = Vector3.Lerp(boxes[i].transform.position, targetPosition, Time.deltaTime * boxMoveSpeed);
-
+                Player.position = targetPosition + Vector3.up * boxHeight;
                 if (Vector3.Distance(boxes[i].transform.position, targetPosition) > 0.01f)
                     moving = true;
             }

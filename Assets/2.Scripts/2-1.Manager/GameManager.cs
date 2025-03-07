@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] float towerMovePower = 5;
 
-    public GameObject towerObject;
+    public GameObject truckObject;
 
     //싱들톤 한 메모리 할당으로 스크립트 기능을 가져올 수 있기에 사용
     public static GameManager instance;
@@ -42,6 +42,6 @@ public class GameManager : MonoBehaviour
     void TowerMove()
     {
         //x축으로 이동
-        towerObject.transform.position += Vector3.right * towerMovePower * Time.deltaTime;
+        truckObject.transform.position += Vector3.right * towerMovePower * Time.deltaTime;
     }
 }

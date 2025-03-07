@@ -22,6 +22,8 @@ public class BoxData
     //박스 Hp UI 보여주는 Slider
     public Slider hpBoxSlider;
 
+    public Sprite sprite;
+
     //초기 박스 데이터
     public BoxData(GameObject obj, float health, int level, Slider hpSlider)
     {
