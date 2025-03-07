@@ -16,9 +16,13 @@ public class HeroData : MonoBehaviour
 
     public float attackCoolTime;
 
+    public float critcleRate;
+
+    public float critcleDamage;
+
     public Slider hpSlider;
 
-    public HeroData(float hp, float _damage, float _attackRange, float _attackCoolTime, Slider _hpSlider)
+    public HeroData(float hp, float _damage, float _attackRange, float _attackCoolTime, float _rate,float _critcleDamage,Slider _hpSlider)
     {
         currentHp = hp;
         maxHp = currentHp;
@@ -26,7 +30,9 @@ public class HeroData : MonoBehaviour
         attackRange = _attackRange;
         attackCoolTime = _attackCoolTime;
         hpSlider = _hpSlider;
-        hpSlider.value = currentHp;
+        critcleRate = _rate;
+        critcleDamage = _critcleDamage;
         hpSlider.maxValue = maxHp;
+        hpSlider.value = currentHp;
     }
 }
