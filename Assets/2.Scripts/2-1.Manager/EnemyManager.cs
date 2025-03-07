@@ -12,14 +12,17 @@ public class EnemyManager : MonoBehaviour
     Transform enemyPoolTrans;
 
     //적을 관리할 리스트
-    List<EnemyData> enemyList = new List<EnemyData>();
+    public List<EnemyData> enemyList = new List<EnemyData>();
 
     int createPoolSize = 15;
 
     GameObject enemyPrefab;
 
+    public static EnemyManager instance;
+
     private void Awake()
     {
+        instance = this;
         enemyPrefab = Resources.Load<GameObject>("Prefabs/Monster/ZombieMelee");
         enemyPoolTrans = GameObject.Find("ObjectPool").transform.GetChild(0).transform;
         for (int i = 0; i < createPoolSize; i++)
@@ -27,15 +30,16 @@ public class EnemyManager : MonoBehaviour
             GameObject enemy = Instantiate(enemyPrefab);
             enemy.transform.parent = enemyPoolTrans;
             enemy.SetActive(false);
-            EnemyStateSetting(enemy, 15, 2, 5, enemy.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>(), 2.5f);
+            enemy.GetComponent<Enemy>().SetIndex(i);
+
+            EnemyStateSetting(enemy, 15, 2, 5, enemy.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>(), 2.5f, 3, EnemyState.Run);
         }
     }
 
-    void EnemyStateSetting(GameObject obj, float hp, float attack, int dropValue, Slider hpSlider,float createDelay)
+    void EnemyStateSetting(GameObject obj, float hp, float attack, int dropValue, Slider hpSlider,float createDelay, float speed, EnemyState state)
     {
-        EnemyData enemyData = new EnemyData(obj, hp, attack, dropValue, hpSlider, createDelay);
+        EnemyData enemyData = new EnemyData(obj, hp, attack, dropValue, hpSlider, createDelay, speed, state);
         enemyList.Add(enemyData);
-
     }
 
     private void GetObject(EnemyData enemyData, Vector3 position, Quaternion rotation)

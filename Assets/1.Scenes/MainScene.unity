@@ -892,8 +892,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e9a6aa2b770cf45aa013c43ca23b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPause: 1
-  isGameOver: 1
+  isPause: 0
+  isGameOver: 0
   towerMovePower: 5
   truckObject: {fileID: 1489341058}
 --- !u!4 &1771137620

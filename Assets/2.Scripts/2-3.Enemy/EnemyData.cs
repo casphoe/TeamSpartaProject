@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum EnemyState
 {
-    Idle,Run,Attack,Dead
+    Run,Attack,Dead
 }
 
 [SerializeField]
@@ -25,9 +25,11 @@ public class EnemyData
 
     public float createCoolTime;
 
+    public float moveSpeed;
+
     public EnemyState state;
 
-    public EnemyData(GameObject _enemy,float hp, float _damage, int _dropMoney, Slider _hpSlider, float _createCoolTime)
+    public EnemyData(GameObject _enemy, float hp, float _damage, int _dropMoney, Slider _hpSlider, float _createCoolTime, float _speed, EnemyState _state)
     {
         enemyObject = _enemy;
         currentHp = hp;
@@ -37,6 +39,8 @@ public class EnemyData
         hpSlider = _hpSlider;
         hpSlider.maxValue = maxHp;
         hpSlider.value = currentHp;
+        moveSpeed = _speed;
         createCoolTime = _createCoolTime;
+        state = _state;
     }
 }
