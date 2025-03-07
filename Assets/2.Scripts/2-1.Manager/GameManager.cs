@@ -1,17 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 //게임 매니저,시작,종료,타워 이동 등 게임에 대한 것을 관리
 public class GameManager : MonoBehaviour
 {
-    //타워 박스 Hp;
-    [SerializeField] Image[] imgBoxHpUi;
-
-    [SerializeField] Image imgPlayerHpUi;
-
     public bool isPause = false;
     public bool isGameOver = false;
 
