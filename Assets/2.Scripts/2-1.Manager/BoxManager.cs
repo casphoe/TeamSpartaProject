@@ -44,10 +44,7 @@ public class BoxManager : MonoBehaviour
     public void AddBox(float hp,int level)
     {
         Vector3 newBoxPoistion = new Vector3(Player.position.x, GameManager.instance.truckObject.transform.position.y) + Vector3.up * (boxDataList.Count * boxHeight);
-        GameObject newBox = Instantiate(boxPrefab, newBoxPoistion, Quaternion.identity, GameManager.instance.truckObject.transform.GetChild(0).transform);
-        newBox.GetComponent<BoxCollider2D>().isTrigger = true;
-        newBox.AddComponent<Rigidbody2D>();
-        newBox.GetComponent<Rigidbody2D>().isKinematic = true;
+        GameObject newBox = Instantiate(boxPrefab, newBoxPoistion, Quaternion.identity, GameManager.instance.truckObject.transform.GetChild(0).transform);      
         Slider boxHpSlider = newBox.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>();
         boxDataList.Add(new BoxData(newBox, hp, level, boxHpSlider)); //새로운 박스를 리스트 끝에 추가
         Player.position = newBoxPoistion + Vector3.up * boxHeight;
