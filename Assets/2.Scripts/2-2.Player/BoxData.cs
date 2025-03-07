@@ -22,10 +22,11 @@ public class BoxData
     //박스 Hp UI 보여주는 Slider
     public Slider hpBoxSlider;
 
-    public Sprite sprite;
+    //박스 스프라이트 랜더러
+    public SpriteRenderer boxSpriteRender;
 
     //초기 박스 데이터
-    public BoxData(GameObject obj, float health, int level, Slider hpSlider)
+    public BoxData(GameObject obj, float health, int level, Slider hpSlider, SpriteRenderer spriteRender)
     {
         boxObject = obj;
         maxHp = health;
@@ -34,5 +35,6 @@ public class BoxData
         hpBoxSlider = hpSlider;
         hpBoxSlider.maxValue = maxHp;
         hpBoxSlider.value = currentHp;
+        boxSpriteRender = spriteRender;
     }
 }
