@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public bool isPause = false;
     public bool isGameOver = false;
+    public bool isMove = false;
 
     [SerializeField] float towerMovePower = 1;
 
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
         //둘다 false 상태일 때 움직임
         if(!isPause && !isGameOver)
         {
-            TowerMove();
+            //TowerMove();
         }
     }
 
@@ -48,10 +49,11 @@ public class GameManager : MonoBehaviour
     {
         if(truckData.currentEnemyReachCount >= truckData.maxEnemyReachCount)
         {
-
+            isMove = false;
         }
         else
         {
+            isMove = true;
             truckObject.transform.position += Vector3.right * truckData.moveSpeed * Time.deltaTime;
             truckData.wheelTrans[0].transform.Rotate(0, 0, truckData.wheelAngleSpeed);
             truckData.wheelTrans[1].transform.Rotate(0, 0, truckData.wheelAngleSpeed);

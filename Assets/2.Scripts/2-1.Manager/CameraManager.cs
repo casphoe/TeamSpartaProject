@@ -21,15 +21,15 @@ public class CameraManager : MonoBehaviour
         //게임을 일시 정지 하거나 게임 오버가 되었을 경우 제외 하고 계속 이동
         if (!GameManager.instance.isPause && !GameManager.instance.isGameOver)
         {
-            CameraMove();
-            BackGroundMove();
+            //CameraMove();
+            //BackGroundMove();
         }            
     }
 
     //트럭이 이동할 때 카메라도 같이 따라서 이동을 해야 함
     void CameraMove()
     {
-        if (followTarget != null)
+        if (followTarget != null && GameManager.instance.isMove == true)
         {
             Vector3 newPosition = transform.position;
             // Mathf.MoveTowards : A 에서 B로 Speed 값 만큼 이동 (현재 위치에서 목표 위치 까지 이동)
@@ -41,7 +41,7 @@ public class CameraManager : MonoBehaviour
     //카메라 이동을 할 때 뒷 배경도 같이 이동을 해야 함
     void BackGroundMove()
     {
-        if (followTarget != null)
+        if (followTarget != null && GameManager.instance.isMove == true)
         {
             Vector3 newPosition = backGroundObject.transform.position;
             float parallaxSpeed = followTruckSpeed * 0.7f; // 배경 속도를 더 느리게 설정 해서 트럭이 이동하는 것 처럼 느끼게 함

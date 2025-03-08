@@ -1627,6 +1627,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4566162104822917155, guid: 39e73014526a04149a4b4bff2302893b, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566162104822917155, guid: 39e73014526a04149a4b4bff2302893b, type: 3}
+      propertyPath: m_Constraints
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039967962105875500, guid: 39e73014526a04149a4b4bff2302893b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7415046734844792889, guid: 39e73014526a04149a4b4bff2302893b, type: 3}
       propertyPath: m_Name
       value: Hero

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum EnemyState
 {
-    Run,Attack,Dead
+    Run,Attack,Dead,Idle
 }
 
 [SerializeField]
@@ -27,11 +27,9 @@ public class EnemyData
 
     public float moveSpeed;
 
-    public bool isStack;
-
     public EnemyState state;
 
-    public EnemyData(GameObject _enemy, float hp, float _damage, int _dropMoney, Slider _hpSlider, float _createCoolTime, float _speed, EnemyState _state, bool _isStack)
+    public EnemyData(GameObject _enemy, float hp, float _damage, int _dropMoney, Slider _hpSlider, float _createCoolTime, float _speed, EnemyState _state)
     {
         enemyObject = _enemy;
         currentHp = hp;
@@ -44,6 +42,5 @@ public class EnemyData
         moveSpeed = _speed;
         createCoolTime = _createCoolTime;
         state = _state;
-        isStack = _isStack;
     }
 }

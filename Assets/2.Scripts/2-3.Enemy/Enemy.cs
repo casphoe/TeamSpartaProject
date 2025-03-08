@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Animator anim;
+    Animator anim;
     //공격하고 있는 박스 오브젝트
-    private GameObject targetBox;
+    GameObject targetBox;
 
     Rigidbody2D rigid;
 
@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
 
     //박스한테 데미지를 입혔는지 판단 하기 위한 변수
     bool isDamage = false;
+
+
+    float stackOffsetY = 0.5f;
 
     private void Awake()
     {
@@ -25,16 +28,17 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         //적들끼리의 물리적 충돌을 무시
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));      
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
     }
 
     private void Update()
     {
-        if(!GameManager.instance.isGameOver && !GameManager.instance.isPause)
+        if (!GameManager.instance.isGameOver && !GameManager.instance.isPause)
         {
             Move();
         }
     }
+
 
     public void SetIndex(int _index)
     {
@@ -52,28 +56,38 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Box"))
+        if (collision.gameObject.CompareTag("Truck"))
         {
+            EnemyManager.instance.enemyList[index].state = EnemyState.Idle;
+            StartCoroutine(WaitAndStatck(collision.transform.position));
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {     
+        if (collision.gameObject.CompareTag("Box"))
+        {          
             targetBox = collision.gameObject;
             EnemyManager.instance.enemyList[index].state = EnemyState.Attack;
             anim.SetBool("IsIdle", false);
             anim.SetBool("IsAttacking", true);
             anim.SetBool("IsDead", false);
 
-            isDamage = true;           
+            isDamage = true;      
         }
-        else if (collision.gameObject.CompareTag("Truck") && !EnemyManager.instance.enemyList[index].isStack)
-        {
-            EnemyManager.instance.enemyList[index].isStack = true;
-            EnemyManager.instance.StackEnemy(this, collision.transform.position);
-        }
+    }
+
+    IEnumerator WaitAndStatck(Vector3 collisionPoint)
+    {
+        yield return new WaitForSeconds(0.2f);
+        EnemyManager.instance.StackEnemy(this, collisionPoint);
     }
 
     public void AttackEvent()
     {
-        if (targetBox != null)
+        if (targetBox != null && isDamage == true)
         {
             int boxIndex = BoxManager.instance.GetBoxIndex(targetBox);
 

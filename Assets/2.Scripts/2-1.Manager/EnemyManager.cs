@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,18 +15,14 @@ public class EnemyManager : MonoBehaviour
     //적을 관리할 리스트
     public List<EnemyData> enemyList = new List<EnemyData>();
 
-    //적 쌓이고 순환 되는 리스트
     public List<Enemy> stackEnemyList = new List<Enemy>();
 
-    //몬스터 간 간격
-    float stackSpacing = 0.5f;
-
-    //트럭과 충돌한 위치
-    Vector3 statckPosition;
-
-    int createPoolSize = 15;
+    int createPoolSize = 25;
 
     GameObject enemyPrefab;
+
+    float stackSpacing = 0.8f;
+    Vector3 statckPosition;
 
     public static EnemyManager instance;
 
@@ -41,13 +38,13 @@ public class EnemyManager : MonoBehaviour
             enemy.SetActive(false);
             enemy.GetComponent<Enemy>().SetIndex(i);
 
-            EnemyStateSetting(enemy, 15, 1, 5, enemy.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>(), 1.5f, 1, EnemyState.Run, false);
+            EnemyStateSetting(enemy, 15, 1, 5, enemy.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Slider>(), 1.5f, 1, EnemyState.Run);
         }
     }
 
-    void EnemyStateSetting(GameObject obj, float hp, float attack, int dropValue, Slider hpSlider,float createDelay, float speed, EnemyState state, bool isStack)
+    void EnemyStateSetting(GameObject obj, float hp, float attack, int dropValue, Slider hpSlider,float createDelay, float speed, EnemyState state)
     {
-        EnemyData enemyData = new EnemyData(obj, hp, attack, dropValue, hpSlider, createDelay, speed, state, isStack);
+        EnemyData enemyData = new EnemyData(obj, hp, attack, dropValue, hpSlider, createDelay, speed, state);
         enemyList.Add(enemyData);
     }
 
@@ -85,31 +82,25 @@ public class EnemyManager : MonoBehaviour
     }
     #endregion
 
-    #region 적 쌓이고 순환 되는 함수
+    #region 적 쌓이고 순환되는 함수
     public void StackEnemy(Enemy enemy, Vector3 collisionPoint)
     {
         if (stackEnemyList.Count == 0)
+        {
             statckPosition = collisionPoint;
+            enemy.transform.position = statckPosition; // 바로 정지
+        }
+        else
+        {
+            // 앞 몬스터의 위치를 기준으로 위로 이동
+            Vector3 previousEnemyPos = stackEnemyList[stackEnemyList.Count - 1].transform.position;
+            statckPosition = previousEnemyPos + new Vector3(0, stackSpacing, 0);
+
+            // 부드러운 애니메이션으로 위로 이동
+            enemy.transform.DOMove(statckPosition, 0.3f).SetEase(Ease.OutQuad);
+        }
+
         stackEnemyList.Add(enemy);
-        RearrangeStack();
-    }
-
-    private void RearrangeStack()
-    {
-        GameManager.instance.truckData.currentEnemyReachCount = stackEnemyList.Count;
-        for (int i = 0; i < stackEnemyList.Count; i++)
-        {
-            stackEnemyList[i].transform.position = statckPosition + Vector3.up * (i * stackSpacing);
-        }
-    }
-
-    public void RemoveStackEnemy(Enemy enemy)
-    {
-        if (stackEnemyList.Contains(enemy))
-        {
-            stackEnemyList.Remove(enemy);
-            RearrangeStack();
-        }
     }
     #endregion
 }
