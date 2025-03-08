@@ -16,20 +16,12 @@ public class Enemy : MonoBehaviour
     //박스한테 데미지를 입혔는지 판단 하기 위한 변수
     bool isDamage = false;
 
-
-    float stackOffsetY = 0.5f;
-
     private void Awake()
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-        //적들끼리의 물리적 충돌을 무시
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
-    }
 
     private void Update()
     {
@@ -59,9 +51,9 @@ public class Enemy : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Truck"))
-        {
+        {         
             EnemyManager.instance.enemyList[index].state = EnemyState.Idle;
-            StartCoroutine(WaitAndStatck(collision.transform.position));
+            StopMoving();            
         }
     }
 
@@ -79,10 +71,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator WaitAndStatck(Vector3 collisionPoint)
+    private void StopMoving()
     {
-        yield return new WaitForSeconds(0.2f);
-        EnemyManager.instance.StackEnemy(this, collisionPoint);
+        rigid.velocity = Vector2.zero;
     }
 
     public void AttackEvent()
@@ -93,7 +84,7 @@ public class Enemy : MonoBehaviour
 
             if (boxIndex != -1)
             {
-                BoxManager.instance.DamageBox(boxIndex, EnemyManager.instance.enemyList[index].damage);
+                //BoxManager.instance.DamageBox(boxIndex, EnemyManager.instance.enemyList[index].damage);
             }
         }
     }

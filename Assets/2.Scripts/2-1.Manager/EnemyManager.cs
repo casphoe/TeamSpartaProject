@@ -21,8 +21,8 @@ public class EnemyManager : MonoBehaviour
 
     GameObject enemyPrefab;
 
-    float stackSpacing = 0.8f;
-    Vector3 statckPosition;
+    float stackSpacing = 1f;
+    Vector3 stackPosition;
 
     public static EnemyManager instance;
 
@@ -76,31 +76,61 @@ public class EnemyManager : MonoBehaviour
 
         if(inactiveEnemy != null)
         {
-            Transform spawnPoint = createPoistion[Random.Range(0, createPoistion.Length)];
+            Transform spawnPoint = createPoistion[0];
             GetObject(inactiveEnemy, spawnPoint.position, Quaternion.identity);
         }
     }
     #endregion
-
     #region 적 쌓이고 순환되는 함수
     public void StackEnemy(Enemy enemy, Vector3 collisionPoint)
     {
         if (stackEnemyList.Count == 0)
         {
-            statckPosition = collisionPoint;
-            enemy.transform.position = statckPosition; // 바로 정지
-        }
-        else
-        {
-            // 앞 몬스터의 위치를 기준으로 위로 이동
-            Vector3 previousEnemyPos = stackEnemyList[stackEnemyList.Count - 1].transform.position;
-            statckPosition = previousEnemyPos + new Vector3(0, stackSpacing, 0);
-
-            // 부드러운 애니메이션으로 위로 이동
-            enemy.transform.DOMove(statckPosition, 0.3f).SetEase(Ease.OutQuad);
+            stackPosition = collisionPoint;
         }
 
         stackEnemyList.Add(enemy);
+        RearrangeStack();
+    }
+
+    private void RearrangeStack()
+    {
+        GameManager.instance.truckData.currentEnemyReachCount = stackEnemyList.Count;
+
+        for (int i = 0; i < stackEnemyList.Count; i++)
+        {
+            Vector3 targetPos = stackPosition + Vector3.up * (i * stackSpacing);
+            stackEnemyList[i].transform.DOMove(targetPos, 0.3f);
+        }
+    }
+
+    public void RemoveStackEnemy(Enemy enemy)
+    {
+        if (stackEnemyList.Contains(enemy))
+        {
+            stackEnemyList.Remove(enemy);
+            RearrangeStack();
+        }
+    }
+
+    private IEnumerator CycleStackEnemies()
+    {
+        while (true)
+        {
+            if (stackEnemyList.Count > 1)
+            {
+                Enemy topEnemy = stackEnemyList[stackEnemyList.Count - 1];
+
+                // 스택의 맨 위 몬스터를 순환시키기
+                stackEnemyList.RemoveAt(stackEnemyList.Count - 1);
+                stackEnemyList.Insert(0, topEnemy);
+
+                // 이동 애니메이션 적용
+                RearrangeStack();
+            }
+
+            yield return new WaitForSeconds(1f);  // 순환 속도 조절
+        }
     }
     #endregion
 }

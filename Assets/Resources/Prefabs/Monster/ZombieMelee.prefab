@@ -70,7 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d26dcb6b66e63c42b9bbeff1f1ad9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
 --- !u!61 &6709193821828534549
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -124,7 +123,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 319310827380095937}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -142,7 +141,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!1 &493843067433296138
 GameObject:
   m_ObjectHideFlags: 0

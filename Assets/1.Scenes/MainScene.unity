@@ -609,7 +609,7 @@ Transform:
   m_GameObject: {fileID: 1182058794}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.21, y: -3.6, z: 0.32598945}
+  m_LocalPosition: {x: -29.72, y: -3.6, z: 0.32598945}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -891,6 +891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPause: 0
   isGameOver: 0
+  isMove: 0
   towerMovePower: 1
   truckObject: {fileID: 1489341058}
 --- !u!4 &1771137620
@@ -936,6 +937,7 @@ MonoBehaviour:
   - {fileID: 1182058795}
   - {fileID: 808353073}
   - {fileID: 1388712307}
+  stackEnemyList: []
 --- !u!1 &1783366071
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,11 +948,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1783366072}
   - component: {fileID: 1783366074}
-  - component: {fileID: 1783366075}
-  - component: {fileID: 1783366076}
   m_Layer: 7
   m_Name: TruckSprite
-  m_TagString: Truck
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -970,6 +970,7 @@ Transform:
   m_Children:
   - {fileID: 1677295389}
   - {fileID: 1266146523}
+  - {fileID: 2035677199}
   m_Father: {fileID: 1489341059}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1783366074
@@ -1024,13 +1025,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1783366075
+--- !u!1 &2035677198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2035677199}
+  - component: {fileID: 2035677201}
+  - component: {fileID: 2035677202}
+  - component: {fileID: 2035677203}
+  m_Layer: 7
+  m_Name: StackPoint
+  m_TagString: Truck
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2035677199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035677198}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.338, y: -1.126, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1783366072}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &2035677201
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783366071}
+  m_GameObject: {fileID: 2035677198}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1056,27 +1091,27 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06116104, y: -1.128928}
+  m_Offset: {x: -2.3673992, y: 0.0060557127}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.8444445, y: 2.8444445}
-    newSize: {x: 5.12, y: 5.12}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.530838, y: 0.58658886}
+  m_Size: {x: 2.4567528, y: 0.57610154}
   m_EdgeRadius: 0
---- !u!50 &1783366076
+--- !u!50 &2035677202
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783366071}
+  m_GameObject: {fileID: 2035677198}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -1084,7 +1119,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1095,7 +1130,19 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 5
+  m_Constraints: 4
+--- !u!114 &2035677203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035677198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95ee4e57b95d204cad58294f7ac6505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &175888372523296963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3219230649175555994, guid: 39e73014526a04149a4b4bff2302893b, type: 3}
