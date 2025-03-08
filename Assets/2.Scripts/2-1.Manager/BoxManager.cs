@@ -63,6 +63,12 @@ public class BoxManager : MonoBehaviour
         if (boxDataList.Contains(targetBox))
         {
             boxDataList.Remove(targetBox);
+
+            // boxes 리스트도 함께 제거
+            if (boxes.Contains(targetBox.boxObject))
+            {
+                boxes.Remove(targetBox.boxObject);
+            }
             Destroy(targetBox.boxObject);
             StartCoroutine(RepositionBoxes());
         }
@@ -82,6 +88,17 @@ public class BoxManager : MonoBehaviour
             RemoveBox(boxDataList[index]);
         }
     }
+
+    public int GetBoxIndex(GameObject box)
+    {
+        for (int i = 0; i < boxDataList.Count; i++)
+        {
+            if (boxDataList[i].boxObject == box)
+                return i;
+        }
+        return -1;
+    }
+
     //박스가 제거 되면 자동 정렬 해주는 함수
     private IEnumerator RepositionBoxes()
     {
@@ -89,7 +106,7 @@ public class BoxManager : MonoBehaviour
         while(moving)
         {
             moving = false;
-            for(int i = 0; i < boxDataList.Count; i++)
+            for (int i = 0; i < boxDataList.Count && i < boxes.Count; i++)
             {
                 Vector3 targetPosition = GameManager.instance.truckObject.transform.position + Vector3.up * (i * boxHeight);
                 boxes[i].transform.position = Vector3.Lerp(boxes[i].transform.position, targetPosition, Time.deltaTime * boxMoveSpeed);

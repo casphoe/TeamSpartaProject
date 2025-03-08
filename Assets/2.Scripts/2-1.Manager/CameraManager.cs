@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] float followTruckSpeed = 5f;
+    [SerializeField] float followTruckSpeed = 1;
     [SerializeField] GameObject backGroundObject;
 
     //카메라가 따라갈 오브젝트
