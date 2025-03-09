@@ -21,7 +21,8 @@ public class EnemyManager : MonoBehaviour
 
     GameObject enemyPrefab;
 
-    float stackSpacing = 1f;
+    float stackSpacingHeight = 1.1f;
+    float stackSpacingWidth = 0.4f;
     Vector3 stackPosition;
 
     public static EnemyManager instance;
@@ -66,7 +67,10 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         InvokeRepeating("SpawnEnemy", 0f, enemyList[0].createCoolTime);
+        //적끼리 충돌 무시
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
     }
+
 
     #region 적 생성 함수
     void SpawnEnemy()
@@ -82,25 +86,32 @@ public class EnemyManager : MonoBehaviour
     }
     #endregion
     #region 적 쌓이고 순환되는 함수
-    public void StackEnemy(Enemy enemy, Vector3 collisionPoint)
-    {
-        if (stackEnemyList.Count == 0)
-        {
-            stackPosition = collisionPoint;
-        }
 
+    public void StackEnemy(Enemy enemy)
+    {      
         stackEnemyList.Add(enemy);
         RearrangeStack();
     }
 
-    private void RearrangeStack()
+    public void RearrangeStack()
     {
+        //적이 최대 쌓일 수 있는 높이 값 계산
+        int maxHeight = Mathf.FloorToInt(BoxManager.instance.maxBoxHeight / stackSpacingHeight);
         GameManager.instance.truckData.currentEnemyReachCount = stackEnemyList.Count;
+
+        stackPosition = GameManager.instance.truckObject.transform.GetChild(1).GetChild(2).position;
 
         for (int i = 0; i < stackEnemyList.Count; i++)
         {
-            Vector3 targetPos = stackPosition + Vector3.up * (i * stackSpacing);
-            stackEnemyList[i].transform.DOMove(targetPos, 0.3f);
+            int row = i % maxHeight; //줄에서 몇 번째 위치
+            int column = i / maxHeight; //몇 번 째 가로 줄인지
+
+            //적들이 이동할 위치를 계산 해줌
+            Vector3 targetPos = stackPosition + Vector3.up * (row * stackSpacingHeight) + Vector3.right * (column * stackSpacingWidth);
+
+            //적의 자연스로운 움직임을 주기 위해서 DOTween 에셋을 사용했습니다.
+            // 오브젝트를 목표 위치로 부드럽게 이동하는 함수
+            stackEnemyList[i].transform.DOMove(targetPos, 0.3f);         
         }
     }
 

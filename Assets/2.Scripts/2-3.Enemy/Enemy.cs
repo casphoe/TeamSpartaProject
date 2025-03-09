@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Truck"))
         {         
             EnemyManager.instance.enemyList[index].state = EnemyState.Idle;
+            EnemyManager.instance.StackEnemy(this);
             StopMoving();            
         }
     }

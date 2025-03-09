@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         //둘다 false 상태일 때 움직임
         if(!isPause && !isGameOver)
         {
-            //TowerMove();
+            TowerMove();
         }
     }
 

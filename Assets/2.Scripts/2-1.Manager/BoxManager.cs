@@ -13,7 +13,7 @@ public class BoxManager : MonoBehaviour
     //박스 높이
     float boxHeight = 1.5f;
 
-    private float boxMoveSpeed = 3f;
+    float boxMoveSpeed = 3f;
 
     //박스를 관리하기 위한 리스트
     private List<GameObject> boxes = new List<GameObject>();
@@ -21,6 +21,8 @@ public class BoxManager : MonoBehaviour
     private List<BoxData> boxDataList = new List<BoxData>();
 
     public static BoxManager instance;
+
+    public float maxBoxHeight = 0;
 
     private void Awake()
     {
@@ -49,12 +51,14 @@ public class BoxManager : MonoBehaviour
         SpriteRenderer boxRender = newBox.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
         boxDataList.Add(new BoxData(newBox, hp, level, boxHpSlider, boxRender)); //새로운 박스를 리스트 끝에 추가
         Player.position = newBoxPoistion + Vector3.up * boxHeight;
+
+        UpdateBoxHeight();
     }
 
-    //박스 레벨업
-    public void BoxLevelUp(float hp, int level, Sprite spr, int wasteCoin)
+    void UpdateBoxHeight()
     {
-
+        float currentBoxHeight = boxDataList.Count * boxHeight;
+        maxBoxHeight = currentBoxHeight;
     }
     
     //Hp가 0인 박스를 제거하는 함수 (Hp 0인 박스 제거)
@@ -115,6 +119,8 @@ public class BoxManager : MonoBehaviour
                     moving = true;
             }
         }
+        UpdateBoxHeight();
+        EnemyManager.instance.RearrangeStack();
         yield return null;
     }
 }

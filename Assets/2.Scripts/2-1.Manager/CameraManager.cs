@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] float followTruckSpeed = 1;
-    [SerializeField] GameObject backGroundObject;
 
     //카메라가 따라갈 오브젝트
     Transform followTarget;
@@ -22,7 +21,6 @@ public class CameraManager : MonoBehaviour
         if (!GameManager.instance.isPause && !GameManager.instance.isGameOver)
         {
             //CameraMove();
-            //BackGroundMove();
         }            
     }
 
@@ -35,18 +33,6 @@ public class CameraManager : MonoBehaviour
             // Mathf.MoveTowards : A 에서 B로 Speed 값 만큼 이동 (현재 위치에서 목표 위치 까지 이동)
             newPosition.x = Mathf.MoveTowards(transform.position.x, followTarget.position.x, followTruckSpeed * 0.9f * Time.deltaTime);
             transform.position = newPosition;
-        }
-    }
-
-    //카메라 이동을 할 때 뒷 배경도 같이 이동을 해야 함
-    void BackGroundMove()
-    {
-        if (followTarget != null && GameManager.instance.isMove == true)
-        {
-            Vector3 newPosition = backGroundObject.transform.position;
-            float parallaxSpeed = followTruckSpeed * 0.7f; // 배경 속도를 더 느리게 설정 해서 트럭이 이동하는 것 처럼 느끼게 함
-            newPosition.x = Mathf.MoveTowards(backGroundObject.transform.position.x, followTarget.position.x, parallaxSpeed * Time.deltaTime);
-            backGroundObject.transform.position = newPosition;
         }
     }
 }
