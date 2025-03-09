@@ -111,7 +111,15 @@ public class EnemyManager : MonoBehaviour
 
             //적의 자연스로운 움직임을 주기 위해서 DOTween 에셋을 사용했습니다.
             // 오브젝트를 목표 위치로 부드럽게 이동하는 함수
-            stackEnemyList[i].transform.DOMove(targetPos, 0.3f);         
+            if (column == 0)
+            {
+                //첫 번째 열 일 경우 그냥 부딪진 장소에서 y축으로 올려가면서 이동시키면 되는 문제
+                stackEnemyList[i].transform.DOMoveY(targetPos.y, 0.3f);
+            }
+            else
+            {
+                stackEnemyList[i].transform.DOMove(targetPos, 0.3f);
+            }
         }
     }
 
