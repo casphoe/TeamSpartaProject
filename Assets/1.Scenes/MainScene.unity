@@ -869,6 +869,7 @@ GameObject:
   - component: {fileID: 1771137619}
   - component: {fileID: 1771137621}
   - component: {fileID: 1771137622}
+  - component: {fileID: 1771137623}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -938,6 +939,18 @@ MonoBehaviour:
   - {fileID: 808353073}
   - {fileID: 1388712307}
   stackEnemyList: []
+--- !u!114 &1771137623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771137618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf96b3b6a57305439e7d550ceec07d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1783366071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,6 +1672,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3219230649175555994, guid: 39e73014526a04149a4b4bff2302893b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767825194720349140, guid: 39e73014526a04149a4b4bff2302893b, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7415046734844792889, guid: 39e73014526a04149a4b4bff2302893b, type: 3}

@@ -16,6 +16,8 @@ public class HeroData : MonoBehaviour
 
     public float attackCoolTime;
 
+    public float nextAttackCoolTime = 0;
+
     public float critcleRate;
 
     public float critcleDamage;
